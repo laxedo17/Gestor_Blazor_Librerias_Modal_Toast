@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Receta_SubGerente", "Receta_SubGerente\Receta_SubGerente.csproj", "{899AE427-9656-4B4B-B4AE-E0B0655EBA40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatosAccceso", "DatosAccceso\DatosAccceso.csproj", "{4E130BA0-E250-4F79-810C-2F2818F0575B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{899AE427-9656-4B4B-B4AE-E0B0655EBA40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{899AE427-9656-4B4B-B4AE-E0B0655EBA40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{899AE427-9656-4B4B-B4AE-E0B0655EBA40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{899AE427-9656-4B4B-B4AE-E0B0655EBA40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E130BA0-E250-4F79-810C-2F2818F0575B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E130BA0-E250-4F79-810C-2F2818F0575B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E130BA0-E250-4F79-810C-2F2818F0575B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E130BA0-E250-4F79-810C-2F2818F0575B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B600232A-D5BB-49CD-B48B-F132F7AC8580}
+	EndGlobalSection
+EndGlobal

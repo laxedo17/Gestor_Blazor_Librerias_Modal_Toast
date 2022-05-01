@@ -1,0 +1,96 @@
+@page "/receta/detalles/{Id:int}"
+@page "/receta/create"
+@using DatosAccceso.Modelos
+@using Servicios
+@using Componentes
+@inject IRecetaServicio RecetaServicio
+@inject IToastService ToastService
+@inject NavigationManager NavigationManager
+
+<div class="container d-flex justify-content-center m-0 p-0">
+    <EditForm Model="@receta" OnValidSubmit="@XestionarOnValidSubmit" class="col-sm-12 col-md-10 col-lg-8 p-0">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="titulo">Nome</label>
+            <InputText id="titulo" @bind-Value="@receta.Titulo" class="form-control" placeholder="Moitas cousas" />
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripcion</label>
+            <InputText id="descripcion" @bind-Value="@receta.Descripcion" class="form-control"
+                placeholder="Que necesitamos" rows="5" />
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-sm btn-primary" hidden="@(Id == null)"><i class="fas fa-save pr-2"></i>
+                Gardar</button>
+            <button type="submit" class="btn btn-sm btn-success" hidden="@(Id != null)"><i class="fas fa-plus pr-2"></i>
+                Crear</button>
+            <a href="/recetas" type="submit" class="btn btn-sm btn-secondary"><i
+                    class="fas fa-times pr-2"></i>Cancelar</a>
+            <button type="button" class="btn btn-sm btn-danger float-right"><i class="fas fa-trash pr-2"
+                    hidden="@(Id == null)" @onclick="(async() => MostrarConfirmacionModal())"></i>
+                Eliminar</button>
+        </div>
+        @if (Id != null)
+        {
+            <hr />
+            <label>Creada no dia: @receta.DataCreacion</label> <br />
+            <label>Actualizada no dia: @receta.DataActualizacion</label>
+
+        }
+    </EditForm>
+</div>
+
+
+
+
+@code {
+    [Parameter] public int? Id { get; set; }
+    public Receta receta = new Receta();
+    [CascadingParameter] IModalService Modal { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != null)
+        {
+            receta = RecetaServicio.Get(Id.Value);
+        }
+    }
+
+    private void XestionarOnValidSubmit()
+    {
+        try
+        {
+            if (Id != null)
+            {
+                RecetaServicio.Update(receta);
+                ToastService.ShowSuccess("As modificacions gardaronse adecuadamente", "Actualizacion completada");
+            }
+            else
+            {
+                Receta novaReceta = RecetaServicio.Create(receta);
+                NavigationManager.NavigateTo($"/receta/detalles/{novaReceta.Id}");
+                ToastService.ShowSuccess("Novo elemento creado e gardado adecuadamente", "Creacion completada");
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError("Non se poideron gardar os cambios ao salvar a receta", "Algo non foi ben");
+        }
+    }
+
+    private async Task MostrarConfirmacionModal()
+    {
+        var parametros = new ModalParameters();
+        parametros.Add("RecetaId", Id);
+        var confirmacionModal = Modal.Show<ModalConfirmacion>("Seguro/a que queres borrar?", parametros);
+        var resultado = await confirmacionModal.Result;
+
+        if (!resultado.Cancelled)
+        {
+            ToastService.ShowSuccess("O elemento foi eliminado", "Completado");
+            NavigationManager.NavigateTo($"recetas");
+        }
+    }
+}
